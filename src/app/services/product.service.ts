@@ -2,13 +2,11 @@ import { Product } from './../models/Product';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Cart } from '../models/Cart';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private readonly CART_API_URL = 'http://localhost:5000/api/cart/';
   private readonly PRODUCT_API_URL = 'http://localhost:5000/api/product/';
   private httpOptions = {
     headers: new HttpHeaders({
