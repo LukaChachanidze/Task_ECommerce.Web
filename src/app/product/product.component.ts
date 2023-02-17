@@ -38,7 +38,7 @@ export class ProductComponent implements OnInit {
       this.createProductForm.value.name,
       this.createProductForm.value.description,
       this.createProductForm.value.price
-    ).subscribe();
+    )
     this.getAllProducts()
   }
 

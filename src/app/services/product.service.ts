@@ -17,7 +17,8 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   deleteProduct(id: number): Observable<any> {
-    return this.http.post(`${this.PRODUCT_API_URL}${id}`, this.httpOptions)
+    console.log(localStorage.getItem('token'));
+    return this.http.post(`${this.PRODUCT_API_URL}${id}`, null, this.httpOptions)
   }
 
   createProduct(_name: string, _description: string, _price: number) {

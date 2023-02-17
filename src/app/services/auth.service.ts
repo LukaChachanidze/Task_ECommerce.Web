@@ -23,7 +23,6 @@ export class AuthService {
   }
 
   login(userName: string, password: string): Observable<any> {
-    console.log('point2');
     return this.http.post<any>(`${this.apiUrl}login`, { userName, password }).pipe(
       tap(() => this.isLoggedIn = true),
       catchError((error) => {
