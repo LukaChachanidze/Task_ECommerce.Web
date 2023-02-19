@@ -17,11 +17,10 @@ export class ProductService {
   constructor(private http: HttpClient) { }
 
   deleteProduct(id: number): Observable<any> {
-    console.log(localStorage.getItem('token'));
     return this.http.post(`${this.PRODUCT_API_URL}${id}`, null, this.httpOptions)
   }
 
-  createProduct(_name: string, _description: string, _price: number) {
+  createProduct(_name: string, _description: string, _price: number) : Observable<any> {
     const product = {
       name: _name,
       description: _description,
@@ -31,7 +30,6 @@ export class ProductService {
   }
 
   updateProduct(_id: number, _name: string, _description: string, _price: number) {
-    console.log('put');
     const product = {
       id: _id,
       name: _name,
@@ -46,8 +44,6 @@ export class ProductService {
   }
 
   getAllProductsAsync(): Observable<Product[]> {
-    console.log(this.httpOptions);
-    console.log(localStorage.getItem('token'));
     return this.http.get<Product[]>(`${this.PRODUCT_API_URL}GetAllProductsAsync`, this.httpOptions)
     }
   };

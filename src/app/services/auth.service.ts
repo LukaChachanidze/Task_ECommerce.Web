@@ -17,7 +17,7 @@ export class AuthService {
   register(user: UserForRegistrationDto) {
     return this.http.post<string>(`${this.apiUrl}register`, user).pipe(
       catchError((error) => {
-        return throwError("Registration failed");
+        return "Registration failed";
       })
     );
   }
@@ -27,12 +27,13 @@ export class AuthService {
       tap(() => this.isLoggedIn = true),
       catchError((error) => {
         console.log(error)
-        return throwError("Login failed");
+        return "Login failed";
       })
     );
   }
 
   checkIfLoggedIn() {
+    this.isLoggedIn = localStorage.getItem('token') == null ? false : true;
     return this.isLoggedIn;
   }
 }

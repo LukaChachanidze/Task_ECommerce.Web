@@ -15,13 +15,17 @@ import { AuthGuard } from './shared/authguard';
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { CartComponent } from './cart/cart.component';
+
 
 
   @NgModule({
     declarations: [
       AppComponent,
       AuthComponent,
-      ProductComponent
+      ProductComponent,
+      CartComponent
     ],
     imports: [
       BrowserModule,
@@ -34,7 +38,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
       MatFormFieldModule,
       MatInputModule,
       MatButtonModule,
-      MatSnackBarModule
+      MatSnackBarModule,
+      MatToolbarModule
     ],
     providers: [AuthGuard],
     bootstrap: [AppComponent]

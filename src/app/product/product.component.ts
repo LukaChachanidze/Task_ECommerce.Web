@@ -1,9 +1,10 @@
+import { CartService } from './../services/cart.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from './../models/Product';
 import { Cart } from './../models/Cart';
 import { ProductService } from '../services/product.service';
 import {FormBuilder, Validators} from "@angular/forms";
-import {Observable, Subscription} from "rxjs";
+
 
 @Component({
   selector: 'app-product',
@@ -20,7 +21,8 @@ export class ProductComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cartService : CartService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +31,7 @@ export class ProductComponent implements OnInit {
       id: [''],
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      price: ['', [Validators.required]],
+      price: ['', [Validators.required]]
     })
   }
 
@@ -37,9 +39,10 @@ export class ProductComponent implements OnInit {
     this.productService.createProduct(
       this.createProductForm.value.name,
       this.createProductForm.value.description,
-      this.createProductForm.value.price
-    )
-    this.getAllProducts()
+      this.createProductForm.value.price,
+    ).subscribe(() => {
+      this.getAllProducts()
+    });
   }
 
   getAllProducts(): void {
@@ -49,8 +52,9 @@ export class ProductComponent implements OnInit {
   }
 
   deleteItem(id: number) {
-    this.productService.deleteProduct(id).subscribe();
-    this.getAllProducts();
+    this.productService.deleteProduct(id).subscribe(() => {
+      this.getAllProducts();
+    });
   }
 
   edit(product: Product) {
@@ -60,13 +64,17 @@ export class ProductComponent implements OnInit {
     this.createProductForm.controls.price.setValue(product.price)
   }
 
+  addToCart(product: Product){
+    this.cartService.addProductToCart(product).subscribe();
+  }
+
   saveChanges() {
     this.productService.updateProduct(
       this.createProductForm.value.id,
       this.createProductForm.value.name,
       this.createProductForm.value.description,
       this.createProductForm.value.price
-    ).subscribe();
-    this.getAllProducts();
-  }
+    ).subscribe(() =>
+      this.getAllProducts()
+    )};
 }

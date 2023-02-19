@@ -63,14 +63,14 @@
           </mat-form-field>
 
           <div>
-            <button mat-raised-button color="primary" (click)="register()">Login</button>
-            <button mat-button type="button" (click)="switchMode()">Register</button>
+            <button mat-raised-button color="primary" (click)="register()">Register</button>
+            <button mat-button type="button" (click)="switchMode()">Login</button>
           </div>
         </form>
       </mat-card-content>
     </mat-card>
   </div>
-  <div *ngIf="errorMessage">
-    {{  errorMessage }}
+  <div *ngIf="message">
+    {{  message }}
   </div>
 </div>

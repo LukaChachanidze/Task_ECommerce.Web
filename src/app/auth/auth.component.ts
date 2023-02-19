@@ -15,7 +15,9 @@ export class AuthComponent implements OnInit {
   isLoginMode = true;
   loginForm!: FormGroup;
   registerForm!: FormGroup;
-  errorMessage: string = '';
+  message: string = '';
+  private token = "";
+  private userId = 0;
 
   constructor(
     private authService: AuthService,
@@ -43,9 +45,11 @@ export class AuthComponent implements OnInit {
 
     this.authService.login(userName, password)
       .subscribe((res: any) => {
-        localStorage.setItem('token', res.token);
+        this.token = res.token;
+        this.userId = res.userId;
+        this.setSession();
         this.router.navigate(['/products']);
-        this.errorMessage = 'Login succeeded';
+        this.message = 'Login succeeded';
       })
   }
 
@@ -58,10 +62,11 @@ export class AuthComponent implements OnInit {
 
     this.authService.register(user).subscribe(
       (response: string) => {
-        this.errorMessage = 'Registration succeeded';
+        this.message = 'Registration succeeded';
+        this.switchMode();
       },
       (err: any) => {
-        this.errorMessage = 'Registration failed';
+        this.message = 'Registration failed';
       }
     )
   }
@@ -69,4 +74,23 @@ export class AuthComponent implements OnInit {
   switchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
+
+ setSession() {
+    localStorage.setItem('token', this.token);
+    localStorage.setItem('userId', this.userId.toString());
+  }
+
+  getSession(): boolean {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.token = token;
+      return true;
+    }
+    return false;
+  }
+
+  checkIfLoggedIn(): boolean {
+    return this.getSession();
+  }
+
 }
